@@ -7,7 +7,12 @@ import damx.ercinoticias.repositories.AutorRepository;
 import damx.ercinoticias.services.AutorService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
+import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.web.bind.annotation.*;
+
+
+
 
 @RestController
 @RequestMapping("/autores")
@@ -31,7 +36,8 @@ public class AutorController {
 
 
     @GetMapping("/info/{nombre}")
-    public ResponseEntity<ResponseModel> obtenerAutorPorNombre(@PathVariable String nombre) {
+    public ResponseEntity<ResponseModel> obtenerAutorPorNombre(@PathVariable String nombre, @AuthenticationPrincipal UserDetails userDetails) {
+        userDetails.getAuthorities();
         return ResponseEntity.ok(autorService.obtenerAutoresPorNombre(nombre));
     }
 }
